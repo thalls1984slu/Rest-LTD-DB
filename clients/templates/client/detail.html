@@ -1,0 +1,44 @@
+{% extends 'core/base.html'%}
+
+{% block title %} {{client.name}} {% endblock %}
+
+{% block content %}
+
+<div class="grid grid-cols-5 gap-6">
+
+    <div class="col-span-2">
+        <p>image on left</p>
+    </div>
+    <div class="col-span-3 p-6 bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-4xl">Client: {{client.name}}</h1>
+        <p class="text-gray-500 pt-5"><strong> Location: </strong>{{client.community}}</p>
+        <p class="text-gray-500 pt-5"><strong> Account Type: </strong>{{client.accountType}}</p>
+        <p class="text-gray-500 pt-5"><strong> Email: </strong>{{client.contact_email}}</p>
+        <p class="text-gray-500 pt-5"><strong> Phone: </strong>{{client.contact_phone}}</p>
+        <p class="text-gray-500 pt-5"><strong> Jobs: </strong>{{client.jobs.count}}</p>
+        <div class = "grid grid-cols-3 gap3">
+            {% for related_jobs in related_jobs %}
+                <div>
+                    <a href="#" >
+                        <div class="p-6 bg-white rounded-b-xl">
+                            <p class = "text-gray-600"">{{related_jobs.title}}</p>
+                            <p class="text-gray-600">{{related_jobs.amount}}</p>
+                           
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <p class="text-gray-500 pt-5"><strong> Total Job Cost: $</strong>{{job_cost}}</p>
+        <div class ="mt-10">
+        <a href="{% url 'client:update_client' client.id%}"
+          class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm ">Update Client</a>
+        </div>
+        <div class ="mt-10" >
+            <a href="{% url 'client:delete_client client.id %}" class="px-3 py-2 text-white no-underline bg-red-700 rounded hover:bg-red-500 text-sm"> Delete</a>
+           </div> 
+    </div>
+    
+</div>
+
+{% endblock %} 

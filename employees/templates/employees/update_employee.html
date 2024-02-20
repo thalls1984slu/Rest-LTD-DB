@@ -1,0 +1,11 @@
+<!-- employees/templates/employees/update_employee.html -->
+print("Employee ID: {{employee.id}}") 
+{% if employee.id %}
+<form method="post" action="{% url 'employees:update_employee' employee.id %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Update</button>
+</form>
+{% else %}
+  <p>Employee ID is not available.</p>
+{% endif %}
