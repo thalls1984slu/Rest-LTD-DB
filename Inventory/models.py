@@ -76,6 +76,10 @@ class Panel(models.Model):
             original = Panel.objects.get(pk=self.pk)
             if original.serial != self.serial and Panel.objects.filter(serial=self.serial).exists():
                 raise ValidationError({'serial': 'Cannot change to an existing serial number.'})
+    def save(self, *args, **kwargs):
+        if self.job:
+            self.in_use = True
+        super().save(*args, **kwargs)
     def __str__(self):
         return self.brand_name.name +' '+ self.model+' '+ self.size
 
@@ -114,6 +118,10 @@ class Inverter(models.Model):
             original = Inverter.objects.get(pk=self.pk)
             if original.serial != self.serial and Inverter.objects.filter(serial=self.serial).exists():
                 raise ValidationError({'serial': 'Cannot change to an existing serial number.'})
+    def save(self, *args, **kwargs):
+        if self.job:
+            self.in_use = True
+        super().save(*args, **kwargs)
     def __str__(self):
         return self.brand_name.name +' '+ self.model+' '+ self.size
     

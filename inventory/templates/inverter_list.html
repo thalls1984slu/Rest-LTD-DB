@@ -41,7 +41,7 @@
   </div>
    <div>
     {% with inverter_count=inverters.count %}
-      <p class="text-white">Number of inverters: {{ inverter_count }}</p>
+      <p class="text-white">Click on first column to update item<br>Number of inverters: {{ inverter_count }}</p>
     {% endwith %}
    </div>
    <div class="relative overflow-x-auto">
@@ -61,11 +61,11 @@
       <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         
-        {{ inverter.brand_name.name }}</th>
+          <a href ="{% url 'update_inverter' inverter.id%}">{{ inverter.brand_name.name }}</a></th>
         <td>{{ inverter.model }}</td>
         <td>{{ inverter.size }}</td>
         <td>{{ inverter.get_stock_status_display }}</td>
-        <td><a href ="{% url 'update_inverter' inverter.id%}">{{ inverter.serial }}</a></td>
+        <td>{{ inverter.serial }}</td>
         {% if inverter.job %}
         <td><a href ="{% url 'jobs:jobs' inverter.job.id%}" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ inverter.job }}</a></td>
         {% else %}
