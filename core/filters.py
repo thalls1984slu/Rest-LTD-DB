@@ -2,9 +2,9 @@ import django_filters
 
 from .models import Employee, Job
 
-from Inventory.models import Inventory
-
 from clients.models import Client
+
+from inventory.models import Battery, Brand, Panel, Inverter
 
 
 class EmployeeFilter(django_filters.FilterSet):
@@ -36,14 +36,52 @@ class ClientFilter(django_filters.FilterSet):
             'accountType': ['exact'],
             'client_status' : ['exact']
             }
-        
-class InventoryFilter(django_filters.FilterSet):
+ 
+class BatteryFilter(django_filters.FilterSet):
     class Meta:
-        model = Inventory
+        model = Battery
         fields= {
-            'stock_type' : ['exact'], 
-            'stock_status': ['exact'], 
-            'barcode' : ['icontains'], 
-            'brand': ['icontains'],
-            'cost' : ['lt', 'gt']
+            'stock_status': ['exact'],
+            'brand_name' : ['exact'], 
+            'model': ['icontains'], 
+            'size': ['icontains'], 
+            'serial' : ['icontains'],
+            'job' : ['exact'], 
+            'in_use' : ['exact'],
             }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filters['brand_name'].queryset = Brand.objects.filter(battery_brand=True)
+
+class PanelFilter(django_filters.FilterSet):
+    class Meta:
+        model = Panel
+        fields= {
+            'stock_status': ['exact'],
+            'brand_name' : ['exact'], 
+            'model': ['icontains'], 
+            'size': ['icontains'], 
+            'serial' : ['icontains'],
+            'job' : ['exact'], 
+            'in_use' : ['exact'],
+            }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filters['brand_name'].queryset = Brand.objects.filter(panel_brand=True)
+
+class InverterFilter(django_filters.FilterSet):
+    class Meta:
+        model = Inverter
+        fields= {
+            'stock_status': ['exact'],
+            'grid_type': ['exact'],
+            'brand_name' : ['exact'], 
+            'model': ['icontains'], 
+            'size': ['icontains'], 
+            'serial' : ['icontains'],
+            'job' : ['exact'], 
+            'in_use' : ['exact'],
+            }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filters['brand_name'].queryset = Brand.objects.filter(inverter_brand=True)

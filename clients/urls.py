@@ -10,6 +10,7 @@ urlpatterns = [
     path('update/<int:pk>', views.update_client, name='update_client'),
     path('client_list/', views.client_list, name='client_list'),
     path('delete/<int:pk>', views.delete_client, name='delete_client'),
+    path('add/community/', views.add_community, name='add_community'),
 
 
 ]

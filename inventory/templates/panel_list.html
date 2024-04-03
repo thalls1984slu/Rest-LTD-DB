@@ -1,0 +1,118 @@
+<!-- create items-->
+{% extends 'core/base.html' %}
+{% load tailwind_filters %}
+
+{% block content %}
+  <h2 class="text-center mb-4 text-xl font-bold leading-none tracking-tight text-white md:text-2xl lg:text-3xl dark:text-white">Panels</h2>
+
+
+
+  <div class="mx-auto w-4/12 bg-yellow-400 p-7 my-10 ">
+  
+    <!-- Template for the page where you want to add the product -->
+<button id="addpanelBtn"class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add panel</button>
+
+<!-- Modal -->
+<div id="addpanelModal" class="modal"  style="display: none;" >
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form method="post" action="{% url 'add_panel' %}">
+      {% csrf_token %}
+      {{ panel_form|crispy }}
+      <button type="submit" class="mt-5 bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+    </form>
+  </div>
+</div>
+
+</div>
+
+<div class="mx-auto w-4/12 bg-yellow-400 p-7 my-10 col-3">
+  <button id="show-form-button"class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search Form</button>
+  
+  <form method="GET" action ="{% url 'add_panel' %}" class="hidden-form" id="search_form">
+    <button id="close-form-button" >x</button>
+    {% csrf_token %}
+    {{ search_form|crispy }}
+  <button type="submit" class="mt-5 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Search</button></td>
+  </form>
+  </div>
+<div class="mb-10 grid-cols-2">
+  <h1 class="text-white text-3xl text-center" >Panel List</h1>
+  
+  </div>
+   <div>
+    {% with panel_count=panels.count %}
+      <p class="text-white">Number of panels: {{ panel_count }}</p>
+    {% endwith %}
+   </div>
+   <div class="relative overflow-x-auto">
+      <table class=" table w-full text-md text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    
+      <tr>
+        <th scope="col" class="px-6 py-3"> Name</th>
+        <th scope="col" class="px-6 py-3">Model</th>
+        <th scope="col" class="px-6 py-3">Size</th>
+        <th scope="col" class="px-6 py-3">Status</th>
+        <th scope="col" class="px-6 py-3">Serial Number</th>
+        <th scope="col" class="px-6 py-3">Job</th>
+        <th scope="col" class="px-6 py-3">Remove</th>
+      </tr>
+      {% for panel in panels %}
+      <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        
+          <a href ="{% url 'update_panel' panel.id %}">{{ panel.brand_name.name }}</a></th>
+        <td>{{ panel.model }}</td>
+        <td>{{ panel.size }}</td>
+        <td>{{ panel.get_stock_status_display }}</td>
+        <td>{{ panel.serial }}</td>
+        {% if panel.job %}
+        <td><a href ="{% url 'jobs:jobs' panel.job.id%}" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{panel.job }}</a></td>
+        {% else %}
+        <td>None</td>
+        {% endif %}
+        <td>
+          <div >
+            <a href="{% url 'delete_panel' panel.id %}" class="px-3 py-2 text-white no-underline bg-red-700 rounded hover:bg-red-500 text-sm"> Delete</a>
+           </div> 
+        </td>
+        
+      </tr>
+      {% endfor %}
+      
+    </table>
+  </div> 
+<!-- JavaScript to handle modal display -->
+<script>
+  var modal = document.getElementById("addpanelModal");
+  var btn = document.getElementById("addpanelBtn");
+  var span = document.getElementsByClassName("close")[0];
+  
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+  
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  </script>
+  <script>
+    document.getElementById("show-form-button").addEventListener("click", function() {
+        var form = document.getElementById("search_form");
+        form.classList.remove("hidden-form");
+    });
+  
+    
+    document.getElementById("close-form-button").addEventListener("click", function() {
+        var form = document.getElementById("my-form");
+        form.classList.add("hidden-form");
+    });
+  </script>
+{% endblock %}

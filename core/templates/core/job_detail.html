@@ -31,11 +31,42 @@
                 <div>
                     <a href="#" >
                         <div class="cols-span-2 p-6 bg-white rounded-b-xl">
+                            <h2> Batteries in Use</h2>
+                            {% for battery in batteries %}
                             
-                            {% for job_name, payment in job_payments %}
                                 <p>
                                 <li>
-                                   {{job_name}} : Payment - {{ payment }}</p>
+                                   {{ battery}}</p>
+                                </li>
+                                </p>
+                            {% endfor %}                     
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" >
+                        <div class="cols-span-2 p-6 bg-white rounded-b-xl">
+                            <h2> Panels in Use</h2>
+                            {% for panel in panels %}
+                            
+                                <p>
+                                <li>
+                                   {{ panel}}</p>
+                                </li>
+                                </p>
+                            {% endfor %}                     
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" >
+                        <div class="cols-span-2 p-6 bg-white rounded-b-xl">
+                            <h2> Inverters in Use</h2>
+                            {% for inverter in inverters %}
+                            
+                                <p>
+                                <li>
+                                   {{ inverter}}</p>
                                 </li>
                                 </p>
                             {% endfor %}                     

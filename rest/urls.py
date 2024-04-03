@@ -18,7 +18,8 @@ import statistics
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-from core.views import index, inventory, job_detail, login_page, logout_page
+from core.views import index, job_detail
+from members.views import login_user, logout_user
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
@@ -29,9 +30,9 @@ urlpatterns = [
     path('clients/', include('clients.urls')),
     path('employees/',include('employees.urls'), name ='employees'),
     path('jobs/', include('core.urls'), name ='jobs'),  
-    path('inventory/', include('Inventory.urls')), 
-    path('login/', login_page, name='login'),
-    path('logout/', logout_page, name='logout'), 
+    path('login/', login_user, name='login'),
+    path('logout/', logout_user, name='logout'),
+    path('inventory/', include('inventory.urls'), name ='inventory'),   
     
 
    

@@ -10,7 +10,7 @@
     <div class="flex h-screen items-center justify-center bg-yellow-400 p-5 mt-8">
       <div class="grid md:grid-cols-2 grid-cols-1 items-center gap-10 md:px-10">
         <div>
-          <h1 class="mb-2 text-3xl font-bold text-white"><span class="text-emerald-700">Hi,</span> Welcome to the Rest LTD Dashboard</h1>
+          <h1 class="mb-2 text-3xl font-bold text-white"><span class="text-emerald-700">Hi,</span> Welcome {{user.username }} to the Rest LTD Dashboard</h1>
           <p class="mb-6 text-white font-semibold">This portal will be used to stream line the managment of your human and capital resources at Rest LTD.</p>
           
           <div class="my-8 px-6 py-12  bg-emerald-700 rounded-xl">
@@ -141,9 +141,9 @@
     {{ employees.name }} is assigned to {{ employees.jobs.count }} jobs.
     </p>
     <a href="{% url 'employees:detail' employees.id%}"
-    class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Employee Info</a>
+    class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Employee Info</a> <br><br>
     <a href="{% url 'employees:update_employee' employees.id%}"
-    class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Update Employee</a>
+    class=" px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm ">Update Employee</a>
         </div>
   </div>
   {% endfor %}
