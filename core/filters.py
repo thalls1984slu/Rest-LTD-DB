@@ -85,3 +85,15 @@ class InverterFilter(django_filters.FilterSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.filters['brand_name'].queryset = Brand.objects.filter(inverter_brand=True)
+
+
+class BrandFilter(django_filters.FilterSet):
+    class Meta:
+        model = Brand
+        fields= {
+            'name': ['icontains'],
+            'battery_brand': ['exact'],
+            'inverter_brand' : ['exact'], 
+            'panel_brand' : ['exact'], 
+            }
+        

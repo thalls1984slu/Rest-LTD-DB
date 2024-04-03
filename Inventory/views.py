@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from core.filters import BatteryFilter , PanelFilter, InverterFilter
-from inventory.forms import BatteryForm, PanelForm, InverterForm
-from .models import Battery, Panel, Inverter
+from core.filters import BatteryFilter , PanelFilter, InverterFilter, BrandFilter
+from inventory.forms import BatteryForm, PanelForm, InverterForm, BrandForm
+from .models import Battery, Panel, Inverter, Brand
 from django.contrib import messages
 
 # Create your views here.
@@ -151,3 +151,47 @@ def inventory_list(request):
 
     context = {'batteries': batteries,'in_use_batteries':in_use_batteries, 'available_batteries':available_batteries, 'panels': panels, 'in_use_panels':in_use_panels,'available_panels':available_panels,'inverters': inverters, 'in_use_inverters':in_use_inverters, 'available_inverters':available_inverters}
     return render(request, 'inventory_list.html', context)
+
+
+def add_brand(request):
+    
+    if request.method == 'POST':
+        brand_form = BrandForm(request.POST)
+        if brand_form.is_valid():
+
+            brand_form.save()
+            return redirect('add_brand')  # Redirect to the homepage after successful form submission
+        else:
+            messages.success(request,("There was an error, serial number already exists"))
+            return redirect('add_brand') 
+    else:
+        brand_filter = BrandFilter(request.GET, queryset=Brand.objects.all())
+        search_form=brand_filter.form
+        brands = brand_filter.qs
+        brand_form = BrandForm()
+        context = {'brands': brands, 'search_form': search_form, 'brand_form': brand_form}
+        
+        return render(request, 'brand_list.html', context)
+    
+def update_brand(request, pk):
+    brand=Brand.objects.get(pk=pk)
+    form = BrandForm(instance=brand)
+    if request.method == 'POST':
+        form = BrandForm(request.POST, request.FILES, instance=brand)
+    context= {'form': form}
+    if form.is_valid():
+            form.save()
+            return redirect('add_brand')  # Redirect to the panel list page
+    else:
+        form = BrandForm()
+    
+    return render(request, 'brand_update.html', context)
+
+def delete_brand(request, pk):
+    brand=Brand.objects.get(pk=pk)
+    if request.method == 'POST':
+        brand.delete()
+        return redirect('add_brand') 
+    
+    context = {'item': brand}
+    return render(request, 'brand_delete.html', context)
