@@ -41,7 +41,7 @@ class EmployeeUpdateForm(forms.ModelForm):
 class EmployeeCreationForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ['name', 'title', 'email','wage','images' ]  # Add other fields as needed
+        fields = ['name', 'title','dob','address', 'email','wage','images' ]  # Add other fields as needed
         images = forms.ImageField() 
         widgets = {
             'name': TextInput(attrs={

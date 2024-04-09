@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_tailwind',
     'django_filters',
+    'mathfilters',
 ]
 
 TAILWIND_APP_NAME = 'theme'

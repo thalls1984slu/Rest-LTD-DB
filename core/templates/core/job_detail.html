@@ -24,6 +24,7 @@
         {% endfor %}
         
         <p class="text-gray-500 mt-2"><strong> Start Date: </strong>{{job.start_date}}</p>
+        <p class="text-gray-500 mt-2"><strong> Estimated end Date: </strong>{{job.end_date}}</p>
 
     <div class = "">
                   
@@ -73,6 +74,11 @@
                         </div>
                     </a>
                 </div>
+            
+        </div>
+        <h2 class="text-gray-500 mt-2"><strong>Notes: </strong> </h2>
+        <div class="cols-span-2 p-6 bg-white rounded-b-xl">
+            <p>{{job.notes}}</p>
             
         </div>
         <p class="text-gray-500 pt-6"><strong> Total : $</strong>{{job.amount}}</p>

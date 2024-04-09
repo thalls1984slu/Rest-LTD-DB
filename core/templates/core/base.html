@@ -32,86 +32,11 @@
        
         <link rel="stylesheet" href="{% static 'rest/css/style.css' %}">  
             <title>{% block title %}{%endblock%}</title>
-            <style>
-                /* Style The Dropdown Button */
-                .dropbtn {
-                  background-color: #047857;
-                  color: white;
-                  padding: 16px;
-                  font-size: 18px;
-                  border: none;
-                  cursor: pointer;
-                }
-                
-                /* The container <div> - needed to position the dropdown content */
-                .dropdown {
-                  position: relative;
-                  display: inline-block;
-                }
-                
-                /* Dropdown Content (Hidden by Default) */
-                .dropdown-content {
-                  display: none;
-                  position: absolute;
-                  background-color: #f9f9f9;
-                  min-width: 160px;
-                  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                  z-index: 1;
-                }
-                
-                /* Links inside the dropdown */
-                .dropdown-content a {
-                  color: black;
-                  padding: 12px 16px;
-                  text-decoration: none;
-                  display: block;
-                }
-                
-                /* Change color of dropdown links on hover */
-                .dropdown-content a:hover {background-color: #f1f1f1}
-                
-                /* Show the dropdown menu on hover */
-                .dropdown:hover .dropdown-content {
-                  display: block;
-                }
-                
-                /* Change the background color of the dropdown button when the dropdown content is shown */
-                .dropdown:hover .dropbtn {
-                  background-color: white;
-                }
-                </style>
+            
     </head>
 
     <body class="flex flex-col h-screen bg-gradient-to-r from-slate-900 to-slate-700">
-        <nav class="py-6 px-6 flex justify-between items-center border-b border-grey-200 bg-emerald-700">
-            <a  class="text-lg font-semibold" href="/"><img src="{% static 'rest/img/rest_logo.jpg' %}" alt="HTML tutorial" style="width:42px;height:42px;">Rest LTD</a>
-            
-            <div class="space-x-6 text-white">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'admin:index' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Admin</a>
-                    <a href="{% url 'client:client_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Clients</a>
-                    <a href="{% url 'employees:employee_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Employees</a>
-                    <a href="{% url 'jobs:job_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Jobs</a>
-                    
-                    <div class="dropdown">
-                        <button class="dropbtn">Inventory</button>
-                        <div class="dropdown-content">
-                          <a href="{% url 'inventory_list' %}">Inventory Summary</a>
-                          <a href="{% url 'add_battery' %}">Batteries</a>
-                          <a href="{% url 'add_panel' %}">Panels</a>
-                          <a href="{% url 'add_inverter' %}">Inverters</a>
-                          <a href="{% url 'add_brand' %}">Brands</a>
-                        </div>
-                      </div>
-                {% endif %}
-                {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}" class="rounded-xl px-6 py-3 font-semibold hover:text-white-500 bg-teal-500 text-white  hover:bg-teal-700">Log Out</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="rounded-xl px-6 py-3 font-semibold hover:text-white-500 bg-teal-500 text-white  hover:bg-teal-700">Log In</a>
-                {% endif %}
-            </div>
-     
-        </nav>
+        {% include 'core/navbar.html' %}
         <div class="flex-grow px-6 py-6">
             {% if messages %}
                 {% for message in messages %}

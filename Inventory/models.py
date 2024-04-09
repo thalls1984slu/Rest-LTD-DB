@@ -29,6 +29,7 @@ class Battery(models.Model):
     size = models.CharField(max_length=255, default =0, blank=True, null=True)
     serial= models.CharField(max_length=255, default =0, blank=True, null=True, unique=True)
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name= "battery_job",default=None,blank=True, null=True)
+    assigned=models.BooleanField(default=False, blank=True)
     in_use=models.BooleanField(default=False, blank=True)
     def clean(self):
         super().clean()
@@ -44,7 +45,11 @@ class Battery(models.Model):
                 raise ValidationError({'serial': 'Cannot change to an existing serial number.'})
     def save(self, *args, **kwargs):
         if self.job:
-            self.in_use = True
+            if self.job.job_progress == 'In progress':
+                self.assigned = True
+            else: 
+                if self.job.job_progress == 'Finished':
+                    self.in_use = True
         super().save(*args, **kwargs)
     def __str__(self):
         return  self.brand_name.name +' '+ self.model+' '+ self.size
@@ -63,6 +68,7 @@ class Panel(models.Model):
     size = models.CharField(max_length=255, default =0, blank=True, null=True, unique=True)
     serial= models.CharField(max_length=255, default =0, blank=True, null=True)
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name= "panel_job",default=None,blank=True,null=True)
+    assigned=models.BooleanField(default=False, blank=True)
     in_use=models.BooleanField(default=False, blank=True)
     def clean(self):
         super().clean()
@@ -78,7 +84,11 @@ class Panel(models.Model):
                 raise ValidationError({'serial': 'Cannot change to an existing serial number.'})
     def save(self, *args, **kwargs):
         if self.job:
-            self.in_use = True
+            if self.job.job_progress == 'In progress':
+                self.assigned = True
+            else: 
+                if self.job.job_progress == 'Finished':
+                    self.in_use = True
         super().save(*args, **kwargs)
     def __str__(self):
         return self.brand_name.name +' '+ self.model+' '+ self.size
@@ -105,6 +115,7 @@ class Inverter(models.Model):
     size = models.CharField(max_length=255, default =0, blank=True, null=True)
     serial= models.CharField(max_length=255, default =0, blank=True, null=True, unique=True)
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name= "inverter_job",default=None,blank=True, null=True)
+    assigned=models.BooleanField(default=False, blank=True)
     in_use=models.BooleanField(default=False, blank=True)
     def clean(self):
         super().clean()
@@ -120,7 +131,11 @@ class Inverter(models.Model):
                 raise ValidationError({'serial': 'Cannot change to an existing serial number.'})
     def save(self, *args, **kwargs):
         if self.job:
-            self.in_use = True
+            if self.job.job_progress == 'In progress':
+                self.assigned = True
+            else: 
+                if self.job.job_progress == 'Finished':
+                    self.in_use = True
         super().save(*args, **kwargs)
     def __str__(self):
         return self.brand_name.name +' '+ self.model+' '+ self.size

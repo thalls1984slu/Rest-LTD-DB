@@ -23,6 +23,7 @@ class JobFilter(django_filters.FilterSet):
         fields= {
             'title' : ['icontains'], 
             'location': ['exact'], 
+            'job_progress' : ['exact'], 
             'system': ['exact'],
             'amount' : ['lt', 'gt']
             }
