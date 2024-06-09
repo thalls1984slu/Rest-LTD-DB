@@ -74,7 +74,9 @@ class Job(models.Model):
     employees = models.ManyToManyField('Employee', related_name='jobs')
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount_actual = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
     start_date = models.DateField()
+    actual_end_date = models.DateField(default=date.today, blank=True, null=True)
     duration = models.FloatField(default=0)
     notes=models.TextField(default='none', blank=True, null=True)
     documents = models.ManyToManyField(Document, blank=True, related_name="job_doc") 
@@ -89,6 +91,11 @@ class Job(models.Model):
         return self.start_date + timedelta(days=self.duration)
     def __str__(self):
         return self.title
+    def profitability(self):
+        return self.amount_actual - self.amount
+    
+    def on_time(self):
+        return (self.actual_end_date - self.start_date).days 
     
 class Employee(models.Model):
     name = models.CharField(max_length=255)

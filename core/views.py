@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
+from django.db.models import F, ExpressionWrapper, DecimalField
+
 from core.models import Job, Employee 
 
 from clients.models import Client
@@ -9,7 +11,8 @@ from inventory.models import Battery, Panel, Inverter
 
 from core.forms import JobCreationForm 
 
-from core.filters import JobFilter 
+from core.filters import JobFilter
+from maintenance.models import YearlySchedule 
 # Create your views here.
 
 #listing of the 5 most recent objects on the homepage
@@ -19,10 +22,21 @@ def index(request):
     jobs = Job.objects.all().order_by('-id')[:5]
     employees = Employee.objects.all().order_by('-id')[:5]
     clients = Client.objects.all().order_by('-id')[:5]
-    all_jobs=Job.objects.all()
-    all_employees=Employee.objects.all()
-    all_clients = Client.objects.all()
-    context ={'jobs':jobs, 'employees':employees, 'clients':clients, 'all_clients':all_clients, 'all_jobs':all_jobs, 'all_employees':all_employees}
+    schedule = YearlySchedule.objects.filter(completed=False).order_by('scheduled_date')[:5]
+    financial_records = Job.objects.annotate(
+        profitability=ExpressionWrapper(
+            F('amount_actual') - F('amount'),
+            output_field=DecimalField()
+        )
+    ).order_by('-profitability')[:5]
+    low_financial_records = Job.objects.annotate(
+        profitability=ExpressionWrapper(
+            F('amount_actual') - F('amount'),
+            output_field=DecimalField()
+        )
+    ).order_by('profitability')[:5]
+
+    context ={'schedule':schedule,'jobs':jobs, 'employees':employees, 'clients':clients,'financial_records':financial_records, 'low_financial_records':low_financial_records}
 
     return render(request, 'core/index.html',context)
 

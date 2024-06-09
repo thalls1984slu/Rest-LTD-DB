@@ -6,6 +6,8 @@ from clients.models import Client
 
 from inventory.models import Battery, Brand, Panel, Inverter
 
+from orders.models import Order
+
 
 class EmployeeFilter(django_filters.FilterSet):
     class Meta:
@@ -98,3 +100,13 @@ class BrandFilter(django_filters.FilterSet):
             'panel_brand' : ['exact'], 
             }
         
+class OrderFilter(django_filters.FilterSet):
+    class Meta: 
+        model = Order
+        fields= { 
+            'order_status': ['exact'],
+            'job' : ['exact'], 
+        
+    
+
+        }

@@ -18,7 +18,7 @@ import statistics
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-from core.views import index, job_detail
+from core.views import index
 from members.views import login_user, logout_user
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -33,6 +33,8 @@ urlpatterns = [
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
     path('inventory/', include('inventory.urls'), name ='inventory'),   
+    path('orders/', include('orders.urls'), name ='orders'), 
+    path('maintenance/', include('maintenance.urls'), name ='maintenance'),
     
 
    
