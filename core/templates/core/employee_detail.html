@@ -4,6 +4,7 @@
 
 {% block content %}
 {% load static %}
+{% load mathfilters %}
 
 <div class="grid grid-cols-5 gap-6">
 
@@ -29,6 +30,22 @@
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     {{employee.title}}
+                </dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">
+                    Address
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {{employee.address}}
+                </dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">
+                    Date of Birth
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {{employee.dob}}
                 </dd>
             </div>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -64,7 +81,12 @@
                                 <li>
                                     Job Duration: {{job.duration}} days
                                  </li>
-                                 
+                                 {%  with days=job.duration wage=employee.wage %}
+                                                               
+                                 <li>
+                                    Est. Pay: ${{days|mul:wage}} 
+                                 </li>
+                                 {% endwith %}
                                 
                                 </a>
                              {% endfor %}

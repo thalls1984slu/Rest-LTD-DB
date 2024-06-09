@@ -1,0 +1,49 @@
+<!-- create jobs-->
+{% extends 'core/base.html' %}
+{% load tailwind_filters %}
+
+{% block content %}
+<div>
+    <h1  class="text-white">Yearly Schedule for {{ job.title}}</h1>  
+</div>  
+
+<div class="relative overflow-x-auto">
+    <table class=" table w-full text-md text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  
+    <tr>
+      <th scope="col" class="px-6 py-3">Location</th>
+      <th scope="col" class="px-6 py-3">Scheduled date</th>
+      <th scope="col" class="px-6 py-3">Completion date</th>
+      <th scope="col" class="px-6 py-3">Cost</th>
+      <th scope="col" class="px-6 py-3">Update</th>
+      <th scope="col" class="px-6 py-3">Delete</th>
+      
+    </tr>
+    {% for schedule in schedules %}
+    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ schedule.job.location}}</th>
+      <td>{{ schedule.scheduled_date}}</td>
+      <td>{{ schedule.completed_date }}</td>
+      <td>{{ schedule.cost}}</td>
+      <td> 
+        <form action="{% url 'maintenance:update_schedule' schedule.id%}" method="get">
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button><a href ="{% url 'maintenance:update_schedule' schedule.id%}" >
+        </form>
+        </td>
+        <td>
+          <div>
+            <a href="{% url 'maintenance:delete_schedule' schedule.id %}"  class="px-3 py-2 text-white no-underline bg-red-700 rounded hover:bg-red-500 text-sm"> Delete</a>
+           </div> 
+        </td>
+      
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+<form action="{% url 'maintenance:add_schedule' job.id%}" method="get">
+    <button type="submit" class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Scheduled Date</button><a href ="{% url 'maintenance:add_schedule' job.id%}" >
+    </form>
+
+    {% endblock %}

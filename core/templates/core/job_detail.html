@@ -24,6 +24,7 @@
         {% endfor %}
         
         <p class="text-gray-500 mt-2"><strong> Start Date: </strong>{{job.start_date}}</p>
+        <p class="text-gray-500 mt-2"><strong> Estimated end Date: </strong>{{job.end_date}}</p>
 
     <div class = "">
                   
@@ -31,11 +32,42 @@
                 <div>
                     <a href="#" >
                         <div class="cols-span-2 p-6 bg-white rounded-b-xl">
+                            <h2> Batteries in Use</h2>
+                            {% for battery in batteries %}
                             
-                            {% for job_name, payment in job_payments %}
                                 <p>
                                 <li>
-                                   {{job_name}} : Payment - {{ payment }}</p>
+                                   {{ battery}}</p>
+                                </li>
+                                </p>
+                            {% endfor %}                     
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" >
+                        <div class="cols-span-2 p-6 bg-white rounded-b-xl">
+                            <h2> Panels in Use</h2>
+                            {% for panel in panels %}
+                            
+                                <p>
+                                <li>
+                                   {{ panel}}</p>
+                                </li>
+                                </p>
+                            {% endfor %}                     
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" >
+                        <div class="cols-span-2 p-6 bg-white rounded-b-xl">
+                            <h2> Inverters in Use</h2>
+                            {% for inverter in inverters %}
+                            
+                                <p>
+                                <li>
+                                   {{ inverter}}</p>
                                 </li>
                                 </p>
                             {% endfor %}                     
@@ -44,10 +76,22 @@
                 </div>
             
         </div>
-        <p class="text-gray-500 pt-6"><strong> Total : $</strong>{{job.amount}}</p>
+        <h2 class="text-gray-500 mt-2"><strong>Notes: </strong> </h2>
+        <div class="cols-span-2 p-6 bg-white rounded-b-xl">
+            <p>{{job.notes}}</p>
+            
+        </div>
+        <p class="text-gray-500 pt-6"><strong> Completed On Time ? : </strong>{{job.on_time}} days overdue</p>
+        <p class="text-gray-500 pt-6"><strong> Estimated Cost : $</strong>{{job.amount}}</p>
+        <p class="text-gray-500 pt-6"><strong> Actual Cost : $</strong>{{job.amount_actual}}</p>
+        <p class="text-gray-500 pt-6"><strong> Profitability : $</strong>{{job.profitability}}</p>
         <div class="mt-10">
             <a href="{% url 'jobs:update_job' job.id%}"
             class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm ">Update Job</a>
+          </div>
+          <div class="mt-10">
+            <a href="{% url 'maintenance:job_schedule' job.id%}"
+            class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm ">Shceduled Maintenance</a>
           </div>
 
           <div class=" mt-10 ">

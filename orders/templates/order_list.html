@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+{% load tailwind_filters %}
+
+{% block content %}
+
+<div class="mb-10 grid-cols-2">
+<h1 class="text-white text-3xl text-center" >Orders List</h1>
+
+</div>
+<div class="mt-10 auto-cols-max text-left">
+  <div class ="text-center">
+     <a href="{% url 'orders:create_order' %}" class="px-6 py-3 text-white no-underline bg-emerald-700 rounded hover:emerald-700 hover:underline hover:text-blue-200 ">Add new orders</a>
+  </div>
+  <div class="mx-auto w-4/12 bg-yellow-400 p-7 my-10 col-3">
+      <form method="GET" action ="{% url 'orders:order_list' %}">
+      {{ form|crispy }}
+      <button type="submit" class="mt-5 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Search</button></td>
+      </form>
+  </div>
+</div>
+
+<div class="relative overflow-x-auto">
+    <table class=" table w-full text-md text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  
+    <tr>
+      <th scope="col" class="px-6 py-3">orders Status</th>
+      <th scope="col" class="px-6 py-3">orders Brand</th>
+      <th scope="col" class="px-6 py-3">orders Model</th>
+      <th scope="col" class="px-6 py-3">orders Quantity</th>
+      <th scope="col" class="px-6 py-3">Order Details</th>
+      <th scope="col" class="px-6 py-3">Remove</th>
+    </tr>
+    {% for orders in orders %}
+    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+      
+      {{ orders.status }}</th>
+      <td>{{ orders.brand_name }}</td>
+      <td>{{ orders.model }}</td>
+      <td>{{ orders.quantity }}</td>
+      <td> 
+        <form action="{% url 'orders:order_detail' orders.id %}" method="get">
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">View</button><a href ="{% url 'orders:order_detail' orders.id%}" >
+        </form>
+        </td>
+      <td>
+        <div >
+          <a href="{% url 'orders:delete_order' orders.id %}" class="px-3 py-2 text-white no-underline bg-red-700 rounded hover:bg-red-500 text-sm"> Delete</a>
+         </div> 
+      </td>
+      
+    </tr>
+    {% endfor %}
+    
+  </table>
+</div>
+  
+{% endblock %}

@@ -1,11 +1,13 @@
 # Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect
 
-from clients.forms import ClientCreationForm
+from clients.forms import ClientCreationForm, CommunityForm
 
 from core.filters import ClientFilter
 
 from clients.models import Client
+
+from django.db.models import Sum
 
 
 def detail(request, pk):
@@ -13,9 +15,13 @@ def detail(request, pk):
 
     related_jobs = client.jobs.all()
 
+    total_estimate= related_jobs.aggregate(Sum('amount'))['amount__sum'] or 0
+
+    total_actual= related_jobs.aggregate(Sum('amount_actual'))['amount_actual__sum'] or 0
+
     job_instance = client.jobs.first()
 
-    context={'related_jobs':related_jobs, 'client':client}
+    context={'related_jobs':related_jobs, 'client':client, 'total_estimate':total_estimate, 'total_actual':total_actual}
 
     return render(request, 'client/detail.html', context) 
 
@@ -62,3 +68,14 @@ def delete_client(request, pk):
     
     context = {'item': client}
     return render(request, 'client/delete_client.html', context)
+
+
+def add_community(request):
+    if request.method == 'POST':
+        form = CommunityForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('client:create_client')  # Redirect to the client page after successful form submission
+    else:
+        form = CommunityForm()
+    return render(request, 'client/add_community.html', {'form': form})

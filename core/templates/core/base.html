@@ -1,5 +1,6 @@
 {% load static %}
 {% load static tailwind_tags %}
+
 <!DOCTYPE html>
 
 <html>
@@ -9,6 +10,26 @@
 
         {% tailwind_css %}
         
+        <style>
+            .hidden-form {
+              display: none;
+            }
+        </style>
+
+<script>
+    document.getElementById("show-form-button").addEventListener("click", function() {
+        var form = document.getElementById("search_form");
+        form.classList.remove("hidden-form");
+    });
+
+    
+    document.getElementById("close-form-button").addEventListener("click", function() {
+        var form = document.getElementById("my-form");
+        form.classList.add("hidden-form");
+    });
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
       
        
         <link rel="stylesheet" href="{% static 'rest/css/style.css' %}">  
@@ -20,13 +41,30 @@
             <a  class="text-lg font-semibold" href="/"><img src="{% static 'rest/img/rest_logo.jpg' %}" alt="HTML tutorial" style="width:42px;height:42px;">Rest LTD</a>
             
             <div class="space-x-6 text-white">
-                <a href="{% url 'client:client_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Clients</a>
-                <a href="{% url 'employees:employee_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Employees</a>
-                <a href="{% url 'jobs:job_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Jobs</a>
-                <a href="{% url 'inventory:inventory_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Inventory</a>
-                <a href="#" class="rounded-xl px-6 py-3 font-semibold hover:text-white-500 bg-teal-500 text-white rounded-xl hover:bg-teal-700">Log In</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'admin:index' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Admin</a>
+                    <a href="{% url 'client:client_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Clients</a>
+                    <a href="{% url 'employees:employee_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Employees</a>
+                    <a href="{% url 'jobs:job_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Jobs</a>
+                    <a href="{% url 'orders:order_list' %}" class="rounded-xl px-6 py-3 text-lg font-semibold hover:text-rose-800 hover:bg-white">Orders</a>
+                    <div class="dropdown">
+                        <button class="dropbtn">Inventory</button>
+                        <div class="dropdown-content">
+                          <a href="{% url 'inventory_list' %}">Inventory Summary</a>
+                          <a href="{% url 'add_battery' %}">Batteries</a>
+                          <a href="{% url 'add_panel' %}">Panels</a>
+                          <a href="{% url 'add_inverter' %}">Inverters</a>
+                          <a href="{% url 'add_brand' %}">Brands</a>
+                        </div>
+                      </div>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="rounded-xl px-6 py-3 font-semibold hover:text-white-500 bg-teal-500 text-white  hover:bg-teal-700">Log Out</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="rounded-xl px-6 py-3 font-semibold hover:text-white-500 bg-teal-500 text-white  hover:bg-teal-700">Log In</a>
+                {% endif %}
             </div>
-     
+        
         </nav>
         <div class="flex-grow px-6 py-6">
             {% block content %}
@@ -36,7 +74,7 @@
         <footer class="py-6 px-6 sticky top-[100vh] justify-between bg-gradient-to-r from-slate-900 to-slate-700 ">
             <div class="w-2/3 pr-10">
                 <h3 class="mb-5 font-semibold text-gray-400">About</h3>
-                <p class="text-lg text-gray-500">Developed by Travis Halls</p>
+                <a href="https://www.linkedin.com/in/travishalls/" class="text-lg text-gray-500">Developed by Travis Halls</p>
 
             </div>
         </footer>

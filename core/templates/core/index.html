@@ -10,7 +10,7 @@
     <div class="flex h-screen items-center justify-center bg-yellow-400 p-5 mt-8">
       <div class="grid md:grid-cols-2 grid-cols-1 items-center gap-10 md:px-10">
         <div>
-          <h1 class="mb-2 text-3xl font-bold text-white"><span class="text-emerald-700">Hi,</span> Welcome to the Rest LTD Dashboard</h1>
+          <h1 class="mb-2 text-3xl font-bold text-white"><span class="text-emerald-700">Hi,</span> Welcome {{user.username }} to the Rest LTD Dashboard</h1>
           <p class="mb-6 text-white font-semibold">This portal will be used to stream line the managment of your human and capital resources at Rest LTD.</p>
           
           <div class="my-8 px-6 py-12  bg-emerald-700 rounded-xl">
@@ -19,7 +19,7 @@
             <div class = "grid grid-cols-3 gap3">
                 
                     <div>
-                       <a href="" >
+                       <a href="{% url 'jobs:job_list' %}" >
                             <div class="p-3 mx-2 bg-white rounded-xl hover:bg-slate-100">
                                 <h2 class = "text-2xl font-semibold">Jobs</h2>
                                 <p class="text-gray-600">{{all_jobs.count}} jobs</p>
@@ -29,7 +29,7 @@
                     </div>
         
                     <div>
-                        <a href="" >
+                        <a href="{% url 'client:client_list' %}" >
                              <div class="p-3 mx-2 bg-white rounded-xl hover:bg-slate-100">
                                  <h2 class = "text-2xl font-semibold">Clients</h2>
                                  <p class="text-gray-600">{{all_clients.count}} clients</p>
@@ -61,142 +61,113 @@
   </div>
   
 <!-- Jumbotron -->
+<div class="relative overflow-x-auto">
+  <h2 class = " text-2xl text-center font-bold mt-5  bg-gray-50">Most Profitable Jobs</h2>
 
-<div class="bg-gradient-to-bl from-slate-200 to-slate-50 px-14 py-6">
-<h2 class = "mb-12 text-2xl text-center font-bold mt-5">Last 5 Jobs</h2>
+  <table class=" table w-full text-md text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 
-<div class="grid grid-cols-1 grid-rows-1 md:grid-cols-5 gap-4">
-    {% for jobs in jobs %}
-   <div
-    class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-    <div
-      class="relative overflow-hidden bg-cover bg-no-repeat"
-      data-te-ripple-init
-      data-te-ripple-color="light">
-      <img
-        class="rounded-t-lg size-96 object-cover"
-        src="{{jobs.display_image.url}}"
-        alt="" />
-      <a href="{% url 'jobs:jobs' jobs.id%}">
-        <div
-          class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-      </a>
-    </div>
-    <div class="p-6">
-      <h5
-        class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-        {{jobs.title}}
-      </h5>
-      <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-          {{jobs.client}}
-      </p>
-      <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-          {{jobs.location}}
-      </p>
-      
-      <a href="{% url 'jobs:jobs' jobs.id%}"
-      class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Job Info</a>
-
-      <a href="{% url 'jobs:update_job' jobs.id%}"
-      class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Update Job</a>
-    </div>
-  </div>
-    {% endfor %}
-
-  </div>
-
-</div>
-
-<div class="bg-yellow-400  px-14 py-6">
-<h2 class = "mb-12 text-2xl text-center font-bold mt-5 ">Last 5 Employees</h2>
-
-
-
-<div class="grid grid-cols-1 grid-rows-1 md:grid-cols-5 gap-4">
-    {% for employees in employees %}  
-    <div
-  class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-  <div
-    class="relative overflow-hidden bg-cover bg-no-repeat"
-    data-te-ripple-init
-    data-te-ripple-color="light">
-    <img
-      class="rounded-t-lg size-96 object-cover"
-      src="{{employees.images.url}}"
-      alt="" />
-    <a href="{% url 'employees:detail' employees.id%}">
-      <div
-        class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-    </a>
-  </div>
-  <div class="p-6">
-    <h5
-      class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-      {{employees.name}}
-    </h5>
-    <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-        {{employees.title}}
-    </p>
-    <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-    {{ employees.name }} is assigned to {{ employees.jobs.count }} jobs.
-    </p>
-    <a href="{% url 'employees:detail' employees.id%}"
-    class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Employee Info</a>
-    <a href="{% url 'employees:update_employee' employees.id%}"
-    class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Update Employee</a>
-        </div>
-  </div>
+  <tr>
+    <th scope="col" class="px-6 py-3">Client</th>
+    <th scope="col" class="px-6 py-3">Customer Estimate</th>
+    <th scope="col" class="px-6 py-3">Profitability</th>
+    <th scope="col" class="px-6 py-3">Associated Job</th>
+    <th scope="col" class="px-6 py-3">Update</th>
+    
+    
+  </tr>
+  {% for record in financial_records %}
+  <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {{ record.client}}</th>
+    <td>{{ record.amount}}</td>
+    <td>{{ record.profitability}}</td>
+    
+    <td>{{ record.title}}</td>
+    <td> 
+      <form action="{% url 'jobs:jobs' record.id%}" method="get">
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go to Job</button><a href ="{% url 'jobs:jobs' record.id%}" >
+      </form>
+      </td>
+     
+    
+  </tr>
   {% endfor %}
+  </table>
 </div>
-    
-  
-    
-  </div>
 
+<div class="relative overflow-x-auto">
+  <h2 class = " text-2xl text-center font-bold mt-5  bg-gray-50">Least Profitable Jobs</h2>
 
-<div class="bg-gradient-to-bl from-slate-200 to-slate-50 px-14 py-6">
-    <h2 class = "mb-12 text-2xl text-center font-bold mt-5">Last 5 Clients</h2>
-    
-    <div class="grid grid-cols-1 grid-rows-1 md:grid-cols-5 gap-4">
-        {% for clients in clients %}
-       <div
-        class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-        <div
-          class="relative overflow-hidden bg-cover bg-no-repeat"
-          data-te-ripple-init
-          data-te-ripple-color="light">
-          <img
-            class="rounded-t-lg size-96 object-cover"
-            src="{{jobs.display_image.url}}"
-            alt="" />
-          <a href="{% url 'client:detail' clients.id%}">
-            <div
-              class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-          </a>
-        </div>
-        <div class="p-6">
-          <h5
-            class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-            {{clients.name}}
-          </h5>
-          <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-            {{clients.accountType}}
-          </p>
-          <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-            {{ clients.name }} has {{ clients.jobs.count }} project.
-          </p>
-          
-          <a href="{% url 'client:detail' clients.id%}"
-          class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Client Info</a>
-          <a href="{% url 'client:update_client' clients.id%}"
-          class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Update Client</a>
-        </div>
-      </div>
-        {% endfor %}
-    
-      </div>
-    
-    </div>
+  <table class=" table w-full text-md text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 
+  <tr>
+    <th scope="col" class="px-6 py-3">Client</th>
+    <th scope="col" class="px-6 py-3">Customer Estimate</th>
+    <th scope="col" class="px-6 py-3">Profitability</th>
+    <th scope="col" class="px-6 py-3">Associated Job</th>
+    <th scope="col" class="px-6 py-3">Update</th>
+    
+    
+  </tr>
+  {% for record in low_financial_records %}
+  <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {{ record.client}}</th>
+    <td>{{ record.amount}}</td>
+    <td>{{ record.profitability}}</td>
+    
+    <td>{{ record.title}}</td>
+    <td> 
+      <form action="{% url 'jobs:jobs' record.id%}" method="get">
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go to Job</button><a href ="{% url 'jobs:jobs' record.id%}" >
+      </form>
+      </td>
+     
+    
+  </tr>
+  {% endfor %}
+  </table>
 </div>
+
+<div class="relative overflow-x-auto">
+  <h2 class = " text-2xl text-center font-bold mt-5  bg-gray-50">Upcoming Maintenances</h2>
+
+  <table class=" table w-full text-md text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+
+  <tr>
+    <th scope="col" class="px-6 py-3">Location</th>
+    <th scope="col" class="px-6 py-3">Scheduled date</th>
+    <th scope="col" class="px-6 py-3">Completion date</th>
+    <th scope="col" class="px-6 py-3">Associated Job</th>
+    <th scope="col" class="px-6 py-3">Update</th>
+    <th scope="col" class="px-6 py-3">Delete</th>
+    
+  </tr>
+  {% for schedule in schedule %}
+  <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {{ schedule.job.location}}</th>
+    <td>{{ schedule.scheduled_date}}</td>
+    <td>{{ schedule.completed_date }}</td>
+    <td>{{ schedule.job.title}}</td>
+    <td> 
+      <form action="{% url 'maintenance:update_schedule' schedule.id%}" method="get">
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button><a href ="{% url 'maintenance:update_schedule' schedule.id%}" >
+      </form>
+      </td>
+      <td>
+        <div>
+          <a href="{% url 'maintenance:delete_schedule' schedule.id %}"  class="px-3 py-2 text-white no-underline bg-red-700 rounded hover:bg-red-500 text-sm"> Delete</a>
+         </div> 
+      </td>
+    
+  </tr>
+  {% endfor %}
+  </table>
+</div>
+
+
 {% endblock %} 

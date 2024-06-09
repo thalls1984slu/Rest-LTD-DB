@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% load tailwind_filters %}
+{% load static %}
+{% block content %}
+
+<p class="text-2xl text-white">Are you sure you want to delete "{{item}}" ?</p>
+
+<form action="{% url 'orders:delete_order' item.id %} " method ='POST' class="text-white mt-10 px-10">
+
+    {% csrf_token %}
+    
+    <a href="{% url 'orders:order_list' %}"class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm">Cancel</a>
+
+    <input class="px-3 py-2 text-white no-underline bg-red-800 rounded hover:bg-red-600 text-sm" type="submit" name="Confirm">
+
+
+</form>
+
+
+{% endblock %}
