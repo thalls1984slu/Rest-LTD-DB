@@ -13,13 +13,13 @@ admin.site.register(Employee)
 from .models import Job
 admin.site.register(Job)
 
-from .models import Compensation
-admin.site.register(Compensation)
+#from .models import Compensation
+#admin.site.register(Compensation)
 
-from .models import Picture
-admin.site.register(Picture)
+#from .models import Picture
+#admin.site.register(Picture)
 
-from .models import Document
-admin.site.register(Document)
+#from .models import Document
+#admin.site.register(Document)
 
 

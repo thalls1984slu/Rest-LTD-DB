@@ -100,6 +100,7 @@ class Inverter(models.Model):
     class GridType(models.TextChoices):
         ONGRID = 'NG',_('On Grid')
         OFFGRID = 'OG', _('Off Grid')
+        HYBRID = 'HB', _('Hybrid')
     stock_status = models.CharField(
         max_length=2,
         choices=StockStatus.choices,

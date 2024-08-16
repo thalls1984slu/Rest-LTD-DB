@@ -55,6 +55,13 @@ class Job(models.Model):
         HIGH = 'HI', _('High')
         MEDIUM = 'MI', _('Medium')
         LOW = 'LO', _('Low')
+
+    class MaintenanceType(models.TextChoices):
+        YEARLY = 'YR', _('Yearly')
+        BIANNUAL = 'BA', _('Bi Annual')
+       
+
+   
         
     title = models.CharField(max_length=255)
     job_progress = models.CharField(
@@ -72,12 +79,23 @@ class Job(models.Model):
     location = models.ForeignKey(Community, on_delete=models.CASCADE)
     system = models.ForeignKey(System, on_delete=models.CASCADE)
     employees = models.ManyToManyField('Employee', related_name='jobs')
+    lease = models.BooleanField(default=False)
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    job_progress = models.CharField(
+        max_length=2,
+        choices=JobProgress.choices,
+        default=JobProgress.CONSULTATION,
+    )   
+    estimate = models.DecimalField(max_digits=10, decimal_places=2)
     amount_actual = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
     start_date = models.DateField()
     actual_end_date = models.DateField(default=date.today, blank=True, null=True)
     duration = models.FloatField(default=0)
+    maintenane_type = models.CharField(
+        max_length=2,
+        choices=MaintenanceType.choices,
+        default=MaintenanceType.YEARLY,
+    )   
     notes=models.TextField(default='none', blank=True, null=True)
     documents = models.ManyToManyField(Document, blank=True, related_name="job_doc") 
     images = models.ManyToManyField(Picture, blank=True, related_name="job_img")
@@ -92,10 +110,11 @@ class Job(models.Model):
     def __str__(self):
         return self.title
     def profitability(self):
-        return self.amount_actual - self.amount
+        return self.amount_actual - self.estimate
     
     def on_time(self):
         return (self.actual_end_date - self.start_date).days 
+    
     
 class Employee(models.Model):
     name = models.CharField(max_length=255)

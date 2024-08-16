@@ -27,7 +27,7 @@ class JobFilter(django_filters.FilterSet):
             'location': ['exact'], 
             'job_progress' : ['exact'], 
             'system': ['exact'],
-            'amount' : ['lt', 'gt']
+            'estimate' : ['lt', 'gt']
             }
         
 class ClientFilter(django_filters.FilterSet):

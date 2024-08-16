@@ -25,13 +25,13 @@ def index(request):
     schedule = YearlySchedule.objects.filter(completed=False).order_by('scheduled_date')[:5]
     financial_records = Job.objects.annotate(
         profitability=ExpressionWrapper(
-            F('amount_actual') - F('amount'),
+            F('amount_actual') - F('estimate'),
             output_field=DecimalField()
         )
     ).order_by('-profitability')[:5]
     low_financial_records = Job.objects.annotate(
         profitability=ExpressionWrapper(
-            F('amount_actual') - F('amount'),
+            F('amount_actual') - F('estimate'),
             output_field=DecimalField()
         )
     ).order_by('profitability')[:5]
@@ -46,7 +46,7 @@ def login_page(request):
 
 def logout_page(request):
     context = {}
-    return render(request, 'core/loout.html', context)
+    return render(request, 'core/logout.html', context)
 
 #def client(request):
 #   return render(request, 'core/client.html')

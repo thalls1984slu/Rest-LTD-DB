@@ -15,7 +15,7 @@ def detail(request, pk):
 
     related_jobs = client.jobs.all()
 
-    total_estimate= related_jobs.aggregate(Sum('amount'))['amount__sum'] or 0
+    total_estimate= related_jobs.aggregate(Sum('estimate'))['estimate__sum'] or 0
 
     total_actual= related_jobs.aggregate(Sum('amount_actual'))['amount_actual__sum'] or 0
 
