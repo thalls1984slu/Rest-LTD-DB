@@ -91,7 +91,7 @@ class Job(models.Model):
     start_date = models.DateField()
     actual_end_date = models.DateField(default=date.today, blank=True, null=True)
     duration = models.FloatField(default=0)
-    maintenane_type = models.CharField(
+    maintenance_type = models.CharField(
         max_length=2,
         choices=MaintenanceType.choices,
         default=MaintenanceType.YEARLY,

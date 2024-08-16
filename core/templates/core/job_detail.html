@@ -83,9 +83,10 @@
         </div>
         <p class="text-gray-500 pt-6"><strong> Completed On Time ? : </strong>{{job.on_time}} days overdue</p>
         <p class="text-gray-500 pt-6"><strong> Estimated Cost : $</strong>{{job.estimate}}</p>
+        <p class="text-gray-500 pt-6"><strong> Deposit : strong>{{job.payment}}</p>
         <p class="text-gray-500 pt-6"><strong> Actual Cost : $</strong>{{job.amount_actual}}</p>
         <p class="text-gray-500 pt-6"><strong> Profitability : $</strong>{{job.profitability}}</p>
-        <p class="text-gray-500 pt-6"><strong> Maintenance : </strong>{{job.get_maintenane_type_display }}</p>
+        <p class="text-gray-500 pt-6"><strong> Maintenance : </strong>{{job.get_maintenance_type_display }}</p>
         <div class="mt-10">
             <a href="{% url 'jobs:update_job' job.id%}"
             class="px-3 py-2 text-white no-underline bg-emerald-700 rounded hover:bg-emerald-500 text-sm ">Update Job</a>
