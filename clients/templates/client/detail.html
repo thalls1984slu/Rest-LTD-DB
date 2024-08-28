@@ -20,7 +20,7 @@
             {% for related_jobs in related_jobs %}
                 
                 <div>
-                    <a href="#" >
+                    <a href="{% url 'jobs:jobs' related_jobs.id %}" >
                         <div class="p-6 bg-white rounded-b-xl">
                             <p class = "text-gray-600"">{{related_jobs.title}}</p>
                             <p class="text-gray-600">{{related_jobs.amount}}</p>

@@ -117,6 +117,16 @@ class Job(models.Model):
     
     
 class Employee(models.Model):
+    class EmployeeStatus(models.TextChoices):
+        CURRENT = 'CU', _('Current')
+        PASTEMPLOYEE = 'PE', _('Past Employee')
+        
+
+    employee_status= models.CharField(
+        max_length=2,
+        choices=EmployeeStatus.choices,
+        default=EmployeeStatus.CURRENT,
+    )  
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     address = models.CharField(max_length=255, default='none', blank=True,null=True)

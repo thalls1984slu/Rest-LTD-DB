@@ -171,6 +171,14 @@ JAZZMIN_SETTINGS = {
     # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "rest/img/rest_logo.jpg",
 
+     "topmenu_links": [
+
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Rest Limited Home Site",  "url": "http://localhost:8000", "permissions": ["auth.view_user"]},
+     ],
+
+    
+
     "show_ui_builder": True,
 
     

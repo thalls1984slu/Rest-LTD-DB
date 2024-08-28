@@ -16,7 +16,8 @@ class EmployeeFilter(django_filters.FilterSet):
             'name' : ['icontains'], 
             'title': ['icontains'], 
             'email': ['icontains'],
-            'wage' : ['lt', 'gt']
+            'wage' : ['lt', 'gt'],
+            'employee_status' : ['exact'],
             }
         
 class JobFilter(django_filters.FilterSet):

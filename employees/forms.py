@@ -41,9 +41,14 @@ class EmployeeUpdateForm(forms.ModelForm):
 class EmployeeCreationForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ['name', 'title','dob','address', 'email','wage','images' ]  # Add other fields as needed
+        fields = ['employee_status','name', 'title','dob','address', 'email','wage','images' ]  # Add other fields as needed
         images = forms.ImageField() 
         widgets = {
+            'current': forms.CheckboxInput(attrs={
+                'class': 'form-check-input',
+                'style': 'margin-top: 10px; margin-bottom: 10px;',
+                'labels': 'Current Employee?'
+                }),
             'name': TextInput(attrs={
                 'class': "form-control",
                 'style': 'mt-5 max-width: 300px; ',
