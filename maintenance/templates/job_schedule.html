@@ -26,7 +26,7 @@
             {{ schedule.job.location}}</th>
       <td>{{ schedule.scheduled_date}}</td>
       <td>{{ schedule.completed_date }}</td>
-      <td>{{ schedule.cost}}</td>
+      <td>{{ schedule.amount}}</td>
       <td> 
         <form action="{% url 'maintenance:update_schedule' schedule.id%}" method="get">
         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button><a href ="{% url 'maintenance:update_schedule' schedule.id%}" >

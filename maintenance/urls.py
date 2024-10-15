@@ -11,6 +11,6 @@ urlpatterns = [
     path('add/<int:job_id>', add_job_schedule, name='add_schedule'),
     path('update/<int:schedule_id>/', update_job_schedule, name='update_schedule'),
     path('delete/<int:schedule_id>/', delete_job_schedule, name='delete_schedule'),
-   # path('list/', job_schedule_list, name='job_schedule_list'),
+    path('create/', create_job_schedule, name='create_schedule'),
 
 ]

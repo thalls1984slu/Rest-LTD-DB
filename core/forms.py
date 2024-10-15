@@ -10,7 +10,7 @@ class JobCreationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(JobCreationForm, self).__init__(*args, **kwargs)
         # Filter the employee queryset to only include current employees
-        self.fields['employee'].queryset = Employee.objects.filter(employee_status=Employee.employee_status.CURRENT)
+        self.fields['employees'].queryset = Employee.objects.filter(employee_status=Employee.EmployeeStatus.CURRENT)
         
             
          

@@ -60,6 +60,9 @@ class Job(models.Model):
         YEARLY = 'YR', _('Yearly')
         BIANNUAL = 'BA', _('Bi Annual')
        
+    class PaymentType(models.TextChoices):
+        DIRECT_PURCHASE='DP', _('Direct Purchase')
+        LEASE = 'LS', _('Lease')
 
    
         
@@ -74,12 +77,20 @@ class Job(models.Model):
         choices=JobRisk.choices,
         default=JobRisk.LOW,
     ) 
+    
+
 
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='jobs')
     location = models.ForeignKey(Community, on_delete=models.CASCADE)
     system = models.ForeignKey(System, on_delete=models.CASCADE)
     employees = models.ManyToManyField('Employee', related_name='jobs')
-    lease = models.BooleanField(default=False)
+    #lease = models.BooleanField(default=False)
+    payment_type = models.CharField(
+        max_length=2,
+        choices=PaymentType.choices,
+        default=PaymentType.DIRECT_PURCHASE
+    ) 
+
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
     job_progress = models.CharField(
         max_length=2,

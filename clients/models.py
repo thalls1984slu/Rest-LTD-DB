@@ -33,6 +33,7 @@ class Client(models.Model):
         NEW = 'NW', _('New')
         RECURRENT = 'RC', _('Recurrent')
         REFERRAL = 'RF', _('Referral')
+        THIRD_PARTY = 'TP', _('Third Party')
 
     name = models.CharField(max_length=255)
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
